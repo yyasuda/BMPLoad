@@ -3,7 +3,7 @@
 //  BMPLoad
 //
 //  Created by Y on 2015/12/24.
-//  Copyright © 2015年 Yutaka Yasuda. All rights reserved.
+//  I do not claim any copyright of this code. Yutaka Yasuda.
 //
 
 
