@@ -111,36 +111,43 @@ unsigned char *BmpLoad(char *FileName, int *imageWidth, int *imageHeight, int *i
     size = width * height * pixSize; // メモリサイズ
     Data = (unsigned char *) malloc(size);
     if (Data == NULL) {
-        errorMsg("cannot alocate memory (%d bytes)\n", size);
+        errorMsg("cannot alocate memory for the picture (%d bytes)\n", size);
         return NULL;
     }
     debugMsg("Data %p (%d bytes allocated)\n", Data, size);
     
-    // ラインごとに読むように変更
-    // 横 1 ラインのバイト数を求める（4バイトアライメント必須）
-    lineSize = width * pixSize; // とりあえず一行のバイト数を求めておく（パディングが有り得るので width * pixSize を直接書きたくない）
+    // ラインごとに読むための準備
+    // 横 1 ラインのバイト数を求める（4バイトアライメント必須なので width * pixSize にパディングが有り得る）
+    lineSize = width * pixSize; // とりあえず一行あたりの最低バイト数を求めておく
     if ((lineSize % 4) != 0) lineSize = ((lineSize / 4) + 1) * 4; // 境界ピッタリでなければ 4byte 境界にあわせる
+    // debugMsg("lineSize = %d\n", lineSize);
+    // ラインバッファを用意
+    lineData = (unsigned char *) malloc(lineSize);
+    if (Data == NULL) {
+        errorMsg("cannot alocate memory for line buffer (%d bytes)\n", lineSize);
+        return NULL;
+    }
     
     // ラインごとに height 行ぶん読む
     for(h = 0; h < height; h++) {
-        if(downToUp) { // 下から上にデータが並んでいる（配列並びに較べて上下逆転）している場合
-            lineData = Data + (height -1 - h) * width * pixSize; // こちらはパディングしない
-        } else {
-            lineData = Data + h * width * pixSize; // こちらはパディングしない
-        }
-        // debugMsg("lineData = %p\n", lineData);
         if (fread(lineData, lineSize, 1, fp) != 1 ){ // 横一行ぶん読む
             errorMsg("cannot read data body\n");
             return NULL;
         }
+        unsigned char *target; // 格納先アドレス
+        if(downToUp) { // 下から上にデータが並んでいる（配列並びに較べて上下逆転）している場合
+            target = Data + (height -1 - h) * width * pixSize;
+        } else {
+            target = Data + h * width * pixSize;
+        }
+        // debugMsg("lineData (offset) = %d\n", lineData - Data);
         // BGR 並びになっている画素ごとの色情報を RGB に入れ替える
         for (w = 0; w < width; w++) {
-            unsigned char temp = lineData[w * pixSize];
-            lineData[w * pixSize] = lineData[w * pixSize + 2];
-            lineData[w * pixSize + 2] = temp;
+            target[w * pixSize   ] = lineData[w * pixSize +2]; // Red
+            target[w * pixSize +1] = lineData[w * pixSize +1]; // Green
+            target[w * pixSize +2] = lineData[w * pixSize   ]; // Blue
+            if(pixSize == 4) target[w * pixSize +3] = lineData[w * pixSize +3]; // Alpha
         }
-        // Alpha データについては特に何もする必要なし
-        // debugMsg("y=%d\n", y);
     }
     
     // あと始末
@@ -172,7 +179,7 @@ int RgbDump(unsigned char *Data, int width, int height, int imageBits)
     for(h=0; h<height; h++) {
         printf("%03d", h);
         for(w=0; w<width; w++) {
-            // printf("#%d#\n", (h * width + w) * imageBits);
+            // printf("#%d#\n", (h * width + w) * pixSize);
             printf(" %02x%02x%02x"
                    ,Data[ (h * width + w) * pixSize ]
                    ,Data[ (h * width + w) * pixSize + 1 ]
