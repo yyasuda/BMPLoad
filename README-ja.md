@@ -47,7 +47,6 @@ $
 </code></pre>
 
 このリポジトリにある他の画像データでも試してみてください。
-You can try other included images.
 15x15_24_dots.bmp は 24bit 画像です。
 15x15_32_dots_alpha.bmp は 32bit つまり 8bit RGB カラー と 8bit アルファ値をもつ画像です。
 
