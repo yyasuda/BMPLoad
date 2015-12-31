@@ -1,21 +1,16 @@
+[ Languages: [English](README.md), [日本語](README-ja.md) ]
+
 # BMPLoad
+
 Simple and Independent C Library for loading Windows Bitmap format data
-
-### Copyright disclaimer 
-
-I do not claim any Copyright of this code.
-
-Yutaka Yasuda.
 
 ### What is this?
 
 If you need RGB / RGBA type image data as array of char on your C program, this will help you. BMPLoad loads Microsoft Windows Bitmap format data, then converts it's image to the standard RGB / RGBA char array. 
 
-The functionality is represented as BmpLoad(). See main() in main.c to know how does it works.
+The functionality is represented as BmpLoad( ). See main( ) in main.c to see how does it works.
 
 ### Usage
-
-Here is the typical code to use BmpLoad().
 
 <pre><code>unsigned char *Data;
 int width, height, bits;
@@ -24,8 +19,8 @@ Data = BmpLoad("sample.bmp", &width, &height, &bits);
 free(Data);
 </code></pre>
 
-BmpLoad() open specified file then set the attribute information. _width_ and _height_ represent the size of image. _bits_ means number of bits of single pixel, should be 24 or 32.
-It also allocates memory and store the image body as RGB or RGBA char array. You can get the array address as the return value. NULL will be returned when severe error occur. 
+BmpLoad( ) open specified file then set the attribute information. _width_ and _height_ represent the size of image. _bits_ means number of bits of single pixel, should be 24 or 32.
+This function also allocates memory and store the image body as RGB or RGBA char array. You can get the array address as the return value. NULL will be returned when severe error occur. 
 
 ### Test Run 
 
@@ -55,9 +50,16 @@ You can try other included images.
 15x15_24_dots.bmp is 24bit image.
 15x15_32_dots_alpha.bmp is 32bit (8bit RGB color + 8bit Alpha) image.
 
+##### NOTE : negative value of the height
+
+If you see the negative value as **height**, the image was scanned from top to down. Usually, Bitmap image scanned from bottom to up.
+BmpLoad( ) function always stores the image to top-down ordering on the array.
+
+For more detail of this issue, see [_biHeight_](https://msdn.microsoft.com/en-us/library/dd183376.aspx) specification.
+
 ### Limitation
 
-BMPload can recognize 24 or 32bit color format as basic Windows Bitmap data only. Under technical term, the code only recognizes BITMAPINFOHEADER with full color (no compression and color palette technique).
+BMPLoad can recognize 24 or 32bit color format as basic Windows Bitmap data only. Under technical term, the code only recognizes BITMAPINFOHEADER with full color (no compression and color palette technique).
 For more detail, see following info;
 https://wikipedia.org/wiki/Windows_bitmap#BITMAPINFOHEADER
 
@@ -72,7 +74,7 @@ On the other side, there are many ways to manage the graphics image format by va
 Thus I started to write code to do such task in simple, easy to understand and independent manner. 
 BMPLoad library is written in C. It runs on just general C environment. And it does not rely any other library.
 
-##### a note for Macintosh users
+##### NOTE : for Macintosh users
 
 I am Macinotsh user, so here are some tips for Mac users.
 
@@ -90,7 +92,16 @@ Could not recognise 15x15_32_dots_alpha.bmp file as 'Alpha' image? Yes, Preview 
 Use the other image utilities to see the Alpha image correctly.
 I use GraphicConverter app on my Mac.
 
+### References
 
+* [Windows Bitmap](https://ja.wikipedia.org/wiki/Windows_bitmap) (Wikipedia)
+* [BITMAPFILEHEADER structure](https://msdn.microsoft.com/en-us/library/dd183374.aspx) (Microsoft Bitmap Structures)
+* [BITMAPINFOHEADER structure](https://msdn.microsoft.com/en-us/library/dd183376.aspx) (Microsoft Bitmap Structures)
 
+### Copyright disclaimer 
+
+I do not claim any Copyright about all codes under this BMPLoad repository.
+
+Yutaka Yasuda
 
 
