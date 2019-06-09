@@ -2,11 +2,11 @@
 
 # BMPLoad
 
-Simple and Independent C Library for loading Windows Bitmap format data
+A simple and independent C Library for loading Windows Bitmap formatted data.
 
 ### What is this?
 
-If you need RGB / RGBA type image data as array of char on your C program, this will help you. BMPLoad loads Microsoft Windows Bitmap format data, then converts it's image to the standard RGB / RGBA char array. 
+If you need RGB / RGBA type image data as array of char on your C program, this will help you. BMPLoad loads Microsoft Windows Bitmap format data, then extracts it's image part to RGB / RGBA char array. 
 
 The functionality is represented as BmpLoad( ). See main( ) in main.c to see how does it works.
 
@@ -19,7 +19,7 @@ Data = BmpLoad("sample.bmp", &width, &height, &bits);
 free(Data);
 </code></pre>
 
-BmpLoad( ) open specified file then set the attribute information. _width_ and _height_ represent the size of image. _bits_ means number of bits of single pixel, should be 24 or 32.
+BmpLoad( ) open the specified file then get the attribute information to . _width_ and _height_ represent the size of image. _bits_ means number of bits of single pixel, should be 24 or 32.
 This function also allocates memory and store the image body as RGB or RGBA char array. You can get the array address as the return value. NULL will be returned when severe error occur. 
 
 ### Test Run 
@@ -48,7 +48,7 @@ $
 
 You can try other included images.
 15x15_24_dots.bmp is 24bit image.
-15x15_32_dots_alpha.bmp is 32bit (8bit RGB color + 8bit Alpha) image.
+15x15_32_dots_alpha.bmp is 32bit (8bit RGB colors + 8bit Alpha) image.
 
 ##### NOTE : negative value of the height
 
@@ -59,7 +59,7 @@ For more detail of this issue, see [_biHeight_](https://msdn.microsoft.com/en-us
 
 ### Limitation
 
-BMPLoad can recognize 24 or 32bit color format as basic Windows Bitmap data only. Under technical term, the code only recognizes BITMAPINFOHEADER with full color (no compression and color palette technique).
+BMPLoad can recognize 24 or 32bit color format as basic Windows Bitmap data only. Under technical term, the code only recognizes BITMAPINFOHEADER with full color (does not work with neither compressed format nor palette-color technique).
 For more detail, see following info;
 https://wikipedia.org/wiki/Windows_bitmap#BITMAPINFOHEADER
 
@@ -67,11 +67,11 @@ Usually case, this conditions are fulfilled on your Bitmap file.
 
 ### Why did I wrote this?
 
-When I encouraged to develop more advanced program in their programming class, I was realized it was relatively difficult to get the bitmap RGB data from usual image data such as PNG or BMP file. 
-Actually, one of my students tried to use OpenGL and tried to handle the bitmap image not only the wire-frame. OpenGL is quite general and popular library, but it does not include any standard way to handle the bitmap image. (And it is natual.)
-On the other side, there are many ways to manage the graphics image format by various languages such as libpng. But for the student in the beginners' class, it is too complicated to understand what they are doing. 
+When I encouraged students to develop more advanced program in their programming class, I was realized it was a bit difficult to load the bitmap RGB data from usual image data file such as PNG or BMP. 
+Actually, one of my students tried to use OpenGL and tried to handle the bitmap image not only the wire-frame. OpenGL is quite general and popular library, but it does not include any standard way to load the bitmap image. (And it is natual.)
+On the other side, there are many tools to load the graphics image in various formats such as libpng. But it is too complicated to understand what they are doing, at least for the student in the beginners' class.
 
-Thus I started to write code to do such task in simple, easy to understand and independent manner. 
+Thus I started to write this code to do that task in simple, easy to understand and independent manner. 
 BMPLoad library is written in C. It runs on just general C environment. And it does not rely any other library.
 
 ##### NOTE : for Macintosh users
@@ -88,7 +88,7 @@ $ sips -s format bmp example.png --out example.bmp
 
 **Preview app does not handle Alpha value (transparency)**
 
-Could not recognise 15x15_32_dots_alpha.bmp file as 'Alpha' image? Yes, Preview app of MacOSX does not handle Alpha, at least on my Yosemite (10.10) enviroment.
+Could not recognise 15x15_32_dots_alpha.bmp file as 'Alpha' image? So, Preview app of MacOSX does not handle Alpha, at least on my Yosemite (10.10) enviroment.
 Use the other image utilities to see the Alpha image correctly.
 I use GraphicConverter app on my Mac.
 
