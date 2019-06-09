@@ -151,6 +151,7 @@ unsigned char *BmpLoad(char *FileName, int *imageWidth, int *imageHeight, int *i
     }
     
     // あと始末
+    free(lineData);
     fclose(fp);
     
     // 戻り値などを設定
