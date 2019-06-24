@@ -96,9 +96,9 @@ $ sips -s format bmp example.png --out example.bmp
 * [BITMAPFILEHEADER structure](https://msdn.microsoft.com/en-us/library/dd183374.aspx) (Microsoft Bitmap Structures)
 * [BITMAPINFOHEADER structure](https://msdn.microsoft.com/en-us/library/dd183376.aspx) (Microsoft Bitmap Structures)
 
-### 著作権について
+### 権利について
 
-私はこの BMPLoad リポジトリのあるすべてのファイルに関して何らの著作権も主張することはありません。
+誰でもこの BMPLoad リポジトリにあるあるすべてのファイルを自由に利用、改変、再配布することができます。再配布する場合も著作権情報を含める必要はなく、改変し、再配布するものの利用ライセンスも自由に設定できます。
 
 Yutaka Yasuda
 
