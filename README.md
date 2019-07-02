@@ -102,6 +102,10 @@ I use GraphicConverter app on my Mac.
 
 I do not claim any Copyright about all codes under this BMPLoad repository.
 
+These codes are licensed under CC0.
+
+[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png "CC0")](http://creativecommons.org/publicdomain/zero/1.0/)
+
 Yutaka Yasuda
 
 
