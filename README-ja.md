@@ -100,6 +100,9 @@ $ sips -s format bmp example.png --out example.bmp
 
 誰でもこの BMPLoad リポジトリにあるあるすべてのファイルを自由に利用、改変、再配布することができます。再配布する場合も著作権情報を含める必要はなく、改変し、再配布するものの利用ライセンスも自由に設定できます。
 
+These codes are licensed under CC0.
+[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png "CC0")](http://creativecommons.org/publicdomain/zero/1.0/deed.ja)
+
 Yutaka Yasuda
 
 
